@@ -16,6 +16,16 @@ from index_builder import daily_index_builder, prepare_model_data
 from factors_loader import load_factors
 from forecasting_models import split_data, run_arima, run_sarimax
 
+# Check if static data folder exists
+# (won't exist on Streamlit Cloud)
+STATIC_DATA_AVAILABLE = os.path.exists(
+    os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "CryptoCurrency"
+    )
+)
+
+
 warnings.filterwarnings("ignore")
 
 # ── PAGE CONFIG ───────────────────────────────────────────────
@@ -535,9 +545,15 @@ with st.sidebar:
     st.markdown(f'<div class="section-header">DATA SOURCE</div>',
                 unsafe_allow_html=True)
 
+    if STATIC_DATA_AVAILABLE:
+        data_options = ["Static  (2019 – 2022)", "Live  (Yahoo Finance)"]
+    else:
+        data_options = ["Live  (Yahoo Finance)"]
+        st.sidebar.info("Static data only available locally")
+
     data_source = st.radio(
         "",
-        ["Static  (2019 – 2022)", f"Live  (Yahoo Finance)"],
+        data_options,
         label_visibility="collapsed"
     )
 
