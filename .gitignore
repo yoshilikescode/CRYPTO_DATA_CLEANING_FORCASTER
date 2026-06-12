@@ -1,0 +1,16 @@
+# Virtual environment - don't upload this
+.venv/
+venv/
+env/
+
+# PyCharm settings
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
